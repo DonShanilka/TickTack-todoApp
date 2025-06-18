@@ -25,9 +25,13 @@ export default function AddTaskModal({ isOpen, onClose, onSave }: Props) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div
+  className="fixed inset-0 flex items-center justify-center z-50"
+  style={{ backgroundColor: 'rgba(0, 0, 0, 0.70)' }} // 3% darkness
+>
+
       <div className="bg-white rounded-xl shadow-lg w-full max-w-md p-6">
-        <h2 className="text-xl font-bold mb-4">Add New Task</h2>
+        <h2 className="text-xl font-bold mb-4 text-black">Add New Task</h2>
 
         <label className="block mb-2 text-sm font-medium text-gray-700">Description</label>
         <textarea
@@ -47,13 +51,13 @@ export default function AddTaskModal({ isOpen, onClose, onSave }: Props) {
 
         <div className="flex justify-end space-x-3">
           <button
-            className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
+            className="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800"
             onClick={onClose}
           >
             Cancel
           </button>
           <button
-            className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600"
+            className="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-800"
             onClick={handleSubmit}
           >
             Save
