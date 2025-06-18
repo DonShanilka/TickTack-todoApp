@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Sidebar from "@/commen/Sidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +28,7 @@ export default function RootLayout({
 
 
 <Router>
-  <Sid />
+  <Sidebar />
   <Routes>
     <Route path="/dashboard" element={<DashboardPage />} />
     <Route path="/tasks" element={<TasksPage />} />
