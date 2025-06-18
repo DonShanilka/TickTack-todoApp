@@ -68,7 +68,7 @@ const Sidebar = () => {
       {/* Bottom - Logout */}
       <div className="p-4 border-t">
         <button
-          onClick={() => router.push('/logout')}
+          onClick={() => console.log('Logout clicked')}
           className="w-full flex items-center px-3 py-2 rounded-sm hover:bg-red-50 text-red-600 font-medium transition-colors"
         >
           <LogOut size={20} className="mr-3" />
