@@ -1,7 +1,7 @@
+// src/app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from "@/commen/Sidebar";
 
 const geistSans = Geist({
@@ -25,16 +25,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-
-
-<Router>
-  <Sidebar />
-  <Routes>
-    <Route path="/dashboard" element={<DashboardPage />} />
-    <Route path="/tasks" element={<TasksPage />} />
-    <Route path="/profile" element={<ProfilePage />} />
-  </Routes>
-</Router>
-
+    <html lang="en">
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <Sidebar />
+        <main className="ml-[280px] p-6 bg-gray-50 min-h-screen">
+          {children}
+        </main>
+      </body>
+    </html>
   );
 }
