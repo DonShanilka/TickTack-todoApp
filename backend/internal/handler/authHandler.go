@@ -36,4 +36,13 @@ func SaveUserHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error hashing password", http.StatusInternalServerError)
 		return
 	}
+
+	user := store.User{Username: req.Username, PasswordHash: hashedPassword}
+	if err := store.saveUser(user); err != nil {
+		http.Error(w, "Error saving user", http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(map[string]string{"message": "User created successfully"})	
+	
 }
