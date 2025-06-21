@@ -22,3 +22,4 @@ func saveUser(user User) error {
 	log.Printf("User %s saved successfully", user.serName)
 	return nil
 }
+
