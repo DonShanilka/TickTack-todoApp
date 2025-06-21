@@ -6,7 +6,7 @@ import (
 	"time"
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/joho/godotenv"
+	// "github.com/joho/godotenv"
 )
 
 var DB *sql.DB
@@ -33,16 +33,16 @@ func InitDB(dsn string) error {
 func main() {
 
 	dbUser := "root"
-	dbPass := "1234"
-	dbHost := "mysql"
+	dbPass := "Shanilka800@#"
+	dbHost := "localhost"
 	dbPort := "3306"
-	dbName := "user_authentication"
+	dbName := "todo"
 
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbUser, dbPass, dbHost, dbPort, dbName)
 
 	var err error
 	for i := 0; i < 10; i++ {
-		err = store.InitDB(dsn)
+		err = InitDB(dsn)
 		if err == nil {
 			break
 		}
