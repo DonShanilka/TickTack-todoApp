@@ -9,17 +9,16 @@ var DB *sql.DB
 
 type User struct {
 	ID int
-	serName string
-	password string
+	Username string
+	PasswordHash string
 }
 
 func saveUser(user User) error {
-	_, err := DB.Exec("INSERT INTO users (id, username, password) VALUES (?, ?, ?)", user.ID, user.serName, user.password)
+	_, err := DB.Exec("INSERT INTO users (id, username, password) VALUES (?, ?, ?)", user.ID, user.Username, user.PasswordHash)
 	if err != nil {
 		log.Printf("Error saving user: %v", err)
-		return err
 	}
-	log.Printf("User %s saved successfully", user.serName)
-	return nil
+	log.Printf("User %s saved successfully", user.Username)
+	return err
 }
 

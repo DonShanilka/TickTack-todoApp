@@ -31,13 +31,13 @@ func SaveUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	hashedPassword, err := auth.HashPassword(req.Password)
+	hash, err := auth.HashPassword(req.Password)
 	if err != nil {
 		http.Error(w, "Error hashing password", http.StatusInternalServerError)
 		return
 	}
 
-	user := store.User{Username: req.Username, PasswordHash: hashedPassword}
+	user := store.User{Username: req.Username, PasswordHash: hash}
 	if err := store.saveUser(user); err != nil {
 		http.Error(w, "Error saving user", http.StatusInternalServerError)
 		return
