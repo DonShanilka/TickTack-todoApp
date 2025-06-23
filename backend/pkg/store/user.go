@@ -24,3 +24,15 @@ func SaveUser(user User) error {
 	return err
 }
 
+
+func GetUserByUsarname(username string) (*User, error) {
+	row := DB.QueryRow("SELECT id, username, password FROM users WHERE username = ?", username)
+	var user User
+	err := row.Scan(&user.ID, &user.Username, &user.PasswordHash)
+	if err == sql.ErrNoRows {
+		return nil, nil
+	} else if err != nil {
+		log.Printf("Error retrieving user: %v", err)
+	}
+	return &user, err
+}
