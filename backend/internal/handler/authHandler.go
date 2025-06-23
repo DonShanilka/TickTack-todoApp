@@ -42,7 +42,7 @@ func SaveUserHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error saving user", http.StatusInternalServerError)
 		return
 	}
-	
+
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(map[string]string{"message": "User created successfully"})	
 }
