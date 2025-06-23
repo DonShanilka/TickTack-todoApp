@@ -10,12 +10,12 @@ import (
 var DB *sql.DB
 
 type User struct {
-	ID int
-	Username string
+	ID 			 int
+	Username 	 string
 	PasswordHash string
 }
 
-func saveUser(user User) error {
+func SaveUser(user User) error {
 	_, err := DB.Exec("INSERT INTO users (id, username, password) VALUES (?, ?, ?)", user.ID, user.Username, user.PasswordHash)
 	if err != nil {
 		log.Printf("Error saving user: %v", err)
