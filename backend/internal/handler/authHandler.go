@@ -38,11 +38,11 @@ func SaveUserHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	user := store.User{Username: req.Username, PasswordHash: hash}
-	if err := store.saveUser(user); err != nil {
+	if err := store.SaveUser(user); err != nil {
 		http.Error(w, "Error saving user", http.StatusInternalServerError)
 		return
 	}
+	
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(map[string]string{"message": "User created successfully"})	
-	
 }
