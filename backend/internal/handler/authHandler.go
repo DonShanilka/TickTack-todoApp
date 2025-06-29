@@ -5,12 +5,12 @@ import (
 	"backend/pkg/store"
 	"encoding/json"
 	"net/http"
-	"strings"
-	"time"
+	// "strings"
+	// "time"
 )
 
 type RegisterRequest struct {
-	Username string `json:"email"`
+	Username string `json:"username"`
 	Password string `json:"password"`
 }
 

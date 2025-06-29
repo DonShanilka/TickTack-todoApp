@@ -16,7 +16,7 @@ type User struct {
 }
 
 func SaveUser(user User) error {
-	_, err := DB.Exec("INSERT INTO users (id, username, password) VALUES (?, ?, ?)", user.ID, user.Username, user.PasswordHash)
+	_, err := DB.Exec("INSERT INTO users (username, password) VALUES (?, ?)", user.Username, user.PasswordHash)
 	if err != nil {
 		log.Printf("Error saving user: %v", err)
 	}

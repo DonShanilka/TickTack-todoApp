@@ -1,27 +1,28 @@
 package main
 
 import (
-	"log"
-	"fmt"
-	"time"
+	"backend/internal/handler"
+	"backend/pkg/store"         // 👈 use store package here
 	"database/sql"
+	"fmt"
+	"log"
+	"net/http"
+	"time"
+
 	_ "github.com/go-sql-driver/mysql"
-	// "github.com/joho/godotenv"
 )
 
-var DB *sql.DB
-
-func InitDB(dsn string) error {
+func initDB(dsn string) error {
 	var err error
-	DB, err = sql.Open("mysql", dsn)
+	store.DB, err = sql.Open("mysql", dsn) // 👈 initialize store.DB directly
 	if err != nil {
 		log.Printf("Error opening the database: %v", err)
 		return err
 	}
 
-	err = DB.Ping()
+	err = store.DB.Ping()
 	if err != nil {
-		log.Printf("Error pingin+g the database: %v", err)
+		log.Printf("Error pinging the database: %v", err)
 		return err
 	}
 
@@ -29,9 +30,7 @@ func InitDB(dsn string) error {
 	return nil
 }
 
-
 func main() {
-
 	dbUser := "root"
 	dbPass := "Shanilka800@#"
 	dbHost := "localhost"
@@ -42,16 +41,20 @@ func main() {
 
 	var err error
 	for i := 0; i < 10; i++ {
-		err = InitDB(dsn)
+		err = initDB(dsn)
 		if err == nil {
 			break
 		}
 		log.Println("DB not ready, retrying in 2 seconds...")
 		time.Sleep(2 * time.Second)
 	}
-	
+
 	if err != nil {
 		log.Fatalf("DB error after retries: %v", err)
 	}
 
+	http.HandleFunc("/api/saveuser", handler.SaveUserHandler)
+
+	log.Println("Server started at :8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
