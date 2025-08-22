@@ -23,7 +23,7 @@ const Sidebar = () => {
       {/* Top - Logo and Nav */}
       <div>
         <div className="h-16 flex items-center px-4 border-b">
-          <h1 className="text-lg font-semibold text-black">Blue Beach Villa</h1>
+          <h1 className="text-lg font-semibold text-black">Todo</h1>
         </div>
 
         <nav className="flex-1 pt-4 overflow-y-auto">
