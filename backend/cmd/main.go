@@ -2,7 +2,7 @@ package main
 
 import (
 	"backend/internal/handler"
-	"backend/pkg/store"         // 👈 use store package here
+	"backend/pkg/store" // 👈 use store package here
 	"database/sql"
 	"fmt"
 	"log"
