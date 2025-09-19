@@ -1,7 +1,6 @@
 package handler
 
 import (
-	// "backend/internal/list"
 	"backend/pkg/store"
 	"encoding/json"
 	"net/http"
@@ -21,13 +20,6 @@ func SaveListHandler(w http.ResponseWriter, r *http.Request) {
 
 	var req ListRequest
 
-	// ✅ Decode JSON body into req first
-	// if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-	// 	http.Error(w, "Invalid request body", http.StatusBadRequest)
-	// 	return
-	// }
-
-	// ✅ Validate after decoding
 	if req.Title == "" || req.UserID == 0 || req.UserEmail == "" {
 		http.Error(w, "Title, UserID and UserEmail are required", http.StatusBadRequest)
 		return
