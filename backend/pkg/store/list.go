@@ -16,4 +16,10 @@ type List struct {
 	UserEmail string
 }
 
-
+func SaveList(list List) error {
+	_, err := DB.Exec("INSERT INTO lists (title, userId, userEmail) VALUES (?, ?, ?)", list.Title, list.UserID, list.UserEmail)
+	if err != nil {
+		log.Printf("Error saving list '%s': %v", list.Title, err)
+	}
+	return err
+}
