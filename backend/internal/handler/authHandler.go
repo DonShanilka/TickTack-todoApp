@@ -10,7 +10,7 @@ import (
 )
 
 type RegisterRequest struct {
-	Username  string `json:"username"`
+	UserName  string `json:"userName"`
 	UserEmail string `json:"userEmail"`
 	Password  string `json:"password"`
 }
@@ -27,7 +27,7 @@ func SaveUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if req.Username == "" || req.Password == "" || req.UserEmail == "" {
+	if req.UserName == "" || req.Password == "" || req.UserEmail == "" {
 		http.Error(w, "Username, email and password are required", http.StatusBadRequest)
 		return
 	}
@@ -38,7 +38,7 @@ func SaveUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user := store.User{Username: req.Username, UserEmail: req.UserEmail, PasswordHash: hash}
+	user := store.User{UserName: req.UserName, UserEmail: req.UserEmail, PasswordHash: hash}
 	if err := store.SaveUser(user); err != nil {
 		http.Error(w, "Error saving user", http.StatusInternalServerError)
 		return

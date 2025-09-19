@@ -10,26 +10,26 @@ import (
 var DB *sql.DB
 
 type User struct {
-	ID 			 int
-	Username 	 string
-	UserEmail    string
+	ID          int
+	UserName    string
+	UserEmail   string
 	PasswordHash string
 }
 
 func SaveUser(user User) error {
-	_, err := DB.Exec("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", user.Username, user.UserEmail, user.PasswordHash)
+	_, err := DB.Exec("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", user.UserName, user.UserEmail, user.PasswordHash)
 	if err != nil {
-		log.Printf("Error saving user '%s': %v", user.Username, err)
+		log.Printf("Error saving user '%s': %v", user.UserName, err)
 		return err
 	}
-	log.Printf("User %s saved successfully", user.Username)
+	log.Printf("User %s saved successfully", user.UserName)
 	return nil
 }
 
-func GetUserByUsername(username string) (*User, error) {
-	row := DB.QueryRow("SELECT id, username, email, password FROM users WHERE username = ?", username)
+func GetUserByUserName(userName string) (*User, error) {
+	row := DB.QueryRow("SELECT id, username, email, password FROM users WHERE username = ?", userName)
 	var user User
-	err := row.Scan(&user.ID, &user.Username, &user.UserEmail, &user.PasswordHash)
+	err := row.Scan(&user.ID, &user.UserName, &user.UserEmail, &user.PasswordHash)
 	if err == sql.ErrNoRows {
 		return nil, nil
 	} else if err != nil {
@@ -41,7 +41,7 @@ func GetUserByUsername(username string) (*User, error) {
 func GetUserByID(id int) (*User, error) {
 	row := DB.QueryRow("SELECT id, username, email, password FROM users WHERE id = ?", id)
 	var user User
-	err := row.Scan(&user.ID, &user.Username, &user.UserEmail, &user.PasswordHash)
+	err := row.Scan(&user.ID, &user.UserName, &user.UserEmail, &user.PasswordHash)
 	if err == sql.ErrNoRows {
 		return nil, nil
 	} else if err != nil {
