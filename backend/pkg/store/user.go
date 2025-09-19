@@ -26,8 +26,6 @@ func SaveUser(user User) error {
 	return nil
 }
 
-
-
 func GetUserByUsername(username string) (*User, error) {
 	row := DB.QueryRow("SELECT id, username, email, password FROM users WHERE username = ?", username)
 	var user User

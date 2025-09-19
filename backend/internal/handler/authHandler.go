@@ -27,8 +27,8 @@ func SaveUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if req.Username == "" || req.Password == "" {
-		http.Error(w, "Username and password are required", http.StatusBadRequest)
+	if req.Username == "" || req.Password == "" || req.UserEmail == "" {
+		http.Error(w, "Username, email and password are required", http.StatusBadRequest)
 		return
 	}
 
@@ -38,7 +38,7 @@ func SaveUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user := store.User{Username: req.Username, PasswordHash: hash}
+	user := store.User{Username: req.Username, UserEmail: req.UserEmail, PasswordHash: hash}
 	if err := store.SaveUser(user); err != nil {
 		http.Error(w, "Error saving user", http.StatusInternalServerError)
 		return
