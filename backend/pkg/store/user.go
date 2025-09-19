@@ -12,11 +12,12 @@ var DB *sql.DB
 type User struct {
 	ID 			 int
 	Username 	 string
+	UserEmail    string
 	PasswordHash string
 }
 
 func SaveUser(user User) error {
-	_, err := DB.Exec("INSERT INTO users (username, password) VALUES (?, ?)", user.Username, user.PasswordHash)
+	_, err := DB.Exec("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", user.Username, user.UserEmail, user.PasswordHash)
 	if err != nil {
 		log.Printf("Error saving user '%s': %v", user.Username, err)
 		return err
@@ -27,10 +28,10 @@ func SaveUser(user User) error {
 
 
 
-func GetUserByUsarname(username string) (*User, error) {
-	row := DB.QueryRow("SELECT id, username, password FROM users WHERE username = ?", username)
+func GetUserByUsername(username string) (*User, error) {
+	row := DB.QueryRow("SELECT id, username, email, password FROM users WHERE username = ?", username)
 	var user User
-	err := row.Scan(&user.ID, &user.Username, &user.PasswordHash)
+	err := row.Scan(&user.ID, &user.Username, &user.UserEmail, &user.PasswordHash)
 	if err == sql.ErrNoRows {
 		return nil, nil
 	} else if err != nil {
@@ -40,9 +41,9 @@ func GetUserByUsarname(username string) (*User, error) {
 }
 
 func GetUserByID(id int) (*User, error) {
-	row := DB.QueryRow("SELECT id, username, password FROM users WHERE id = ?", id)
+	row := DB.QueryRow("SELECT id, username, email, password FROM users WHERE id = ?", id)
 	var user User
-	err := row.Scan(&user.ID, &user.Username, &user.PasswordHash)
+	err := row.Scan(&user.ID, &user.Username, &user.UserEmail, &user.PasswordHash)
 	if err == sql.ErrNoRows {
 		return nil, nil
 	} else if err != nil {

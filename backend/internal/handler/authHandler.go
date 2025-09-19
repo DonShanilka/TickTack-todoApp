@@ -10,8 +10,9 @@ import (
 )
 
 type RegisterRequest struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Username  string `json:"username"`
+	UserEmail string `json:"userEmail"`
+	Password  string `json:"password"`
 }
 
 func SaveUserHandler(w http.ResponseWriter, r *http.Request) {
