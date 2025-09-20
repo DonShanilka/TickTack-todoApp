@@ -57,6 +57,7 @@ func main() {
 
 	http.HandleFunc("/api/savelist", handler.SaveListHandler)
 	http.HandleFunc("/api/updatelist", handler.UpdateListHandler)
+	http.HandleFunc("/api/deletelist", handler.DeleteListHandler)
 
 	http.HandleFunc("/api/savetask", handler.SaveTaskHandler)
 
