@@ -1,7 +1,7 @@
 package store
 
 import (
-	// "database/sql"
+	"database/sql"
 	"log"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -42,4 +42,15 @@ func DeleteList(id int) error {
 		log.Printf("Error deleting list ID %d: %v", id, err)
 	}
 	return err
+}
+
+// GET_by_ID
+func GetListByID(id int) (List, error) {
+	var list List
+	err := DB.QueryRow("SELECT id, title, userId, userEmail FROM lists WHERE id = ?", id).
+		Scan(&list.ID, &list.Title, &list.UserID, &list.UserEmail)
+	if err != nil && err != sql.ErrNoRows {
+		log.Printf("Error fetching list ID %d: %v", id, err)
+	}
+	return list, err
 }
