@@ -55,6 +55,7 @@ func main() {
 
 	http.HandleFunc("/api/saveuser", handler.SaveUserHandler)
 	http.HandleFunc("/api/savelist", handler.SaveListHandler)
+	http.HandleFunc("/api/savetask", handler.SaveTaskHandler)
 
 	log.Println("Server started at :8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
