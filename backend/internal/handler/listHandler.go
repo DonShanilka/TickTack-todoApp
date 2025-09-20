@@ -23,6 +23,12 @@ func SaveListHandler(w http.ResponseWriter, r *http.Request) {
 
 	var req ListRequest
 
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		log.Printf("Error decoding request body: %v", err)
+		return
+	}
+
 	if req.Title == "" || req.UserID == 0 || req.UserEmail == "" {
 		http.Error(w, "Title, UserID and UserEmail are required", http.StatusBadRequest)
 		return
