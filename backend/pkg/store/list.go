@@ -34,3 +34,12 @@ func UpdateList(list List) error {
 	}
 	return err
 }
+
+// DELETE
+func DeleteList(id int) error {
+	_, err := DB.Exec("DELETE FROM lists WHERE id = ?", id)
+	if err != nil {
+		log.Printf("Error deleting list ID %d: %v", id, err)
+	}
+	return err
+}
