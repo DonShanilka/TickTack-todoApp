@@ -3,6 +3,7 @@ package handler
 import (
 	"backend/pkg/store"
 	"encoding/json"
+	"log"
 	"net/http"
 )
 
@@ -50,13 +51,19 @@ func UpdateListHandler(w http.ResponseWriter, r *http.Request) {
 
 	var req ListRequest
 
-	// Validation
-	if req.ID == 0 || req.Title == "" || req.UserID == 0 || req.UserEmail == "" {
-		http.Error(w, "ID, Title, UserID and UserEmail are required", http.StatusBadRequest)
+	// Decode JSON body 
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		log.Printf("Error decoding request body: %v", err)
 		return
 	}
 
-	// Build list object
+	if req.ID == 0 || req.Title == "" || req.UserID == 0 || req.UserEmail == "" {
+		http.Error(w, "ID, Title, UserID and UserEmail are required", http.StatusBadRequest)
+		log.Printf("Invalid request: %+v", req)
+		return
+	}
+
 	list := store.List{
 		ID:        req.ID,
 		Title:     req.Title,
@@ -64,7 +71,6 @@ func UpdateListHandler(w http.ResponseWriter, r *http.Request) {
 		UserEmail: req.UserEmail,
 	}
 
-	// Update in DB
 	if err := store.UpdateList(list); err != nil {
 		http.Error(w, "Error updating list", http.StatusInternalServerError)
 		return

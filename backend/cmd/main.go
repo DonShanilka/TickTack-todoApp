@@ -54,7 +54,10 @@ func main() {
 	}
 
 	http.HandleFunc("/api/saveuser", handler.SaveUserHandler)
+
 	http.HandleFunc("/api/savelist", handler.SaveListHandler)
+	http.HandleFunc("/api/updatelist", handler.UpdateListHandler)
+
 	http.HandleFunc("/api/savetask", handler.SaveTaskHandler)
 
 	log.Println("Server started at :8080")
