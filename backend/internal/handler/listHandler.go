@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 type ListRequest struct {
@@ -85,4 +86,34 @@ func UpdateListHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]string{"message": "List updated successfully"})
+}
+
+// DELETE
+func DeleteListHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodDelete {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Get ID from query parameters
+	idStr := r.URL.Query().Get("id")
+	if idStr == "" {
+		http.Error(w, "ID is required", http.StatusBadRequest)
+		return
+	}
+
+	// Convert string to int
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		http.Error(w, "Invalid ID", http.StatusBadRequest)
+		return
+	}
+
+	if err := store.DeleteList(id); err != nil {
+		http.Error(w, "Error deleting list", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]string{"message": "List deleted successfully"})
 }
