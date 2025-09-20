@@ -44,6 +44,34 @@ func DeleteList(id int) error {
 	return err
 }
 
+// GET ALL
+func GetAllLists() ([]List, error) {
+	rows, err := DB.Query("SELECT id, title, userId, userEmail FROM lists")
+	if err != nil {
+		log.Printf("Error fetching all lists: %v", err)
+		return nil, err
+	}
+	defer rows.Close()
+
+	var lists []List
+	for rows.Next() {
+		var list List
+		if err := rows.Scan(&list.ID, &list.Title, &list.UserID, &list.UserEmail); err != nil {
+			log.Printf("Error scanning list row: %v", err)
+			return nil, err
+		}
+		lists = append(lists, list)
+	}
+
+	if err = rows.Err(); err != nil {
+		log.Printf("Error iterating list rows: %v", err)
+		return nil, err
+	}
+
+	return lists, nil
+}
+
+
 // GET_by_ID
 func GetListByID(id int) (List, error) {
 	var list List
