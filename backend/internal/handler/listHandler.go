@@ -117,3 +117,23 @@ func DeleteListHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]string{"message": "List deleted successfully"})
 }
+
+
+// GET ALL
+func GetAllListsHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Call the store function to fetch all lists
+	lists, err := store.GetAllLists()
+	if err != nil {
+		http.Error(w, "Error fetching lists", http.StatusInternalServerError)
+		return
+	}
+
+	// Respond with JSON
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(lists)
+}
