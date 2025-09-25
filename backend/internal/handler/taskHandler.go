@@ -50,37 +50,37 @@ func SaveTaskHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // UPDATE
-// func UpdateTaskHandler(w http.ResponseWriter, r *http.Request) {
-// 	if r.Method != http.MethodPut {
-// 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-// 		return
-// 	}
+func UpdateTaskHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPut {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
 
-// 	var req Task
-// 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-// 		http.Error(w, "Invalid request payload", http.StatusBadRequest)
-// 		return
-// 	}
+	var req Task
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, "Invalid request payload", http.StatusBadRequest)
+		return
+	}
 
-// 	if req.ID == 0 || req.Title == "" {
-// 		http.Error(w, "ID and Title are required", http.StatusBadRequest)
-// 		return
-// 	}
+	if req.ID == 0 || req.Title == "" {
+		http.Error(w, "ID and Title are required", http.StatusBadRequest)
+		return
+	}
 
-// 	task := store.Task{
-// 		ID:          req.ID,
-// 		Title:       req.Title,
-// 		Description: req.Description,
-// 		TaskType:    req.TaskType,
-// 		Completed:   req.Completed,
-// 		ListID:      req.ListID,
-// 	}
+	task := store.Task{
+		ID:          req.ID,
+		Title:       req.Title,
+		Description: req.Description,
+		TaskType:    req.TaskType,
+		Completed:   req.Completed,
+		ListID:      req.ListID,
+	}
 
-// 	if err := store.UpdateTask(task); err != nil {
-// 		http.Error(w, "Error updating task", http.StatusInternalServerError)
-// 		return
-// 	}
+	if err := store.UpdateTask(task); err != nil {
+		http.Error(w, "Error updating task", http.StatusInternalServerError)
+		return
+	}
 
-// 	w.WriteHeader(http.StatusOK)
-// 	json.NewEncoder(w).Encode(map[string]string{"message": "Task updated successfully"})
-// }
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]string{"message": "Task updated successfully"})
+}

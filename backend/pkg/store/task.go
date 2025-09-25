@@ -37,7 +37,6 @@ func UpdateTask(task Task) error {
 	return err
 }
 
-
 // DELETE
 func DeleteTask(id int) error {
 	_, err := DB.Exec("DELETE FROM tasks WHERE id = ?", id)
