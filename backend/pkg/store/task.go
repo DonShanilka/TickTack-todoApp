@@ -16,6 +16,7 @@ type Task struct {
 	ListID		int
 }
 
+// CREATE
 func SaveTask(task Task) error {
 	_, err := DB.Exec("INSERT INTO tasks (title, description, taskType, completed, listId) VALUES (?, ?, ?, ?, ?)", task.Title, task.Description, task.TaskType, task.Completed, task.ListID)
 	if err != nil {
@@ -24,3 +25,17 @@ func SaveTask(task Task) error {
 	return err
 }
 
+// UPDATE
+func UpdateTask(task Task) error {
+	_, err := DB.Exec(
+		"UPDATE tasks SET title = ?, description = ?, taskType = ?, completed = ?, listId = ? WHERE id = ?",
+		task.Title, task.Description, task.TaskType, task.Completed, task.ListID, task.ID,
+	)
+	if err != nil {
+		log.Printf("Error updating task ID %d: %v", task.ID, err)
+	}
+	return err
+}
+
+
+// DELETE
