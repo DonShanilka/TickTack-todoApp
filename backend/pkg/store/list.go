@@ -63,6 +63,7 @@ func GetAllLists() ([]List, error) {
 		lists = append(lists, list)
 	}
 
+	// Check for iteration errors
 	if err = rows.Err(); err != nil {
 		log.Printf("Error iterating list rows: %v", err)
 		return nil, err
@@ -70,7 +71,6 @@ func GetAllLists() ([]List, error) {
 
 	return lists, nil
 }
-
 
 // GET_by_ID
 func GetListByID(id int) (List, error) {
@@ -82,4 +82,3 @@ func GetListByID(id int) (List, error) {
 	}
 	return list, err
 }
-
