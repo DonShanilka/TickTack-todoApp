@@ -39,3 +39,10 @@ func UpdateTask(task Task) error {
 
 
 // DELETE
+func DeleteTask(id int) error {
+	_, err := DB.Exec("DELETE FROM tasks WHERE id = ?", id)
+	if err != nil {
+		log.Printf("Error deleting task ID %d: %v", id, err)
+	}
+	return err
+}
