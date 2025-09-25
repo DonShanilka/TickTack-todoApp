@@ -46,3 +46,30 @@ func DeleteTask(id int) error {
 	}
 	return err
 }
+
+// GET ALL
+func GetAllTasks() ([]Task, error) {
+	rows, err := DB.Query("SELECT id, title, description, taskType, completed, listId FROM tasks")
+	if err != nil {
+		log.Printf("Error fetching tasks: %v", err)
+		return nil, err
+	}
+	defer rows.Close()
+
+	var tasks []Task
+	for rows.Next() {
+		var task Task
+		if err := rows.Scan(&task.ID, &task.Title, &task.Description, &task.TaskType, &task.Completed, &task.ListID); err != nil {
+			log.Printf("Error scanning task row: %v", err)
+			return nil, err
+		}
+		tasks = append(tasks, task)
+	}
+
+	if err = rows.Err(); err != nil {
+		log.Printf("Error iterating over task rows: %v", err)
+		return nil, err
+	}
+
+	return tasks, nil
+}
