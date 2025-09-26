@@ -61,6 +61,7 @@ func main() {
 	http.HandleFunc("/api/getalllists", handler.GetAllListsHandler)
 
 	http.HandleFunc("/api/savetask", handler.SaveTaskHandler)
+	http.HandleFunc("/api/updatetask", handler.UpdateTaskHandler)
 
 	log.Println("Server started at :8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))

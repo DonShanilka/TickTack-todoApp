@@ -4,6 +4,7 @@ import (
 	"backend/pkg/store"
 	"encoding/json"
 	"net/http"
+	"strconv"
 )
 
 type Task struct {
@@ -83,4 +84,33 @@ func UpdateTaskHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]string{"message": "Task updated successfully"})
+}
+
+// DELETE
+func DeleteTaskHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodDelete {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Extract task ID from query params ?id=1
+	idStr := r.URL.Query().Get("id")
+	if idStr == "" {
+		http.Error(w, "Task ID is required", http.StatusBadRequest)
+		return
+	}
+
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		http.Error(w, "Invalid task ID", http.StatusBadRequest)
+		return
+	}
+
+	if err := store.DeleteTask(id); err != nil {
+		http.Error(w, "Error deleting task", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]string{"message": "Task deleted successfully"})
 }
