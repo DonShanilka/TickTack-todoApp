@@ -93,7 +93,6 @@ func DeleteTaskHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Extract task ID from query params ?id=1
 	idStr := r.URL.Query().Get("id")
 	if idStr == "" {
 		http.Error(w, "Task ID is required", http.StatusBadRequest)
