@@ -7,8 +7,10 @@ import {
   User,
   LogOut,
   Plus,
+  Trash2,
 } from 'lucide-react';
 import { useState } from 'react';
+
 import {
   Dialog,
   DialogContent,
@@ -16,8 +18,8 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 const menuItems = [
   { text: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
@@ -43,6 +45,10 @@ const Sidebar = () => {
     }
   };
 
+  const handleDeleteProject = (proj: string) => {
+    setProjects(projects.filter((p) => p !== proj));
+  };
+
   return (
     <div className="w-[280px] min-h-screen bg-white text-black fixed left-0 top-0 bottom-0 shadow-md flex flex-col justify-between">
       {/* Top - Logo and Nav */}
@@ -56,7 +62,6 @@ const Sidebar = () => {
           <ul className="space-y-1 px-4">
             {menuItems.map(({ text, icon: Icon, path }) => {
               const isActive = pathname === path;
-
               return (
                 <li key={path}>
                   <button
@@ -73,12 +78,16 @@ const Sidebar = () => {
                     <Icon
                       size={20}
                       className={`mr-3 ${
-                        isActive ? 'text-orange-600' : 'text-black/70 group-hover:text-black'
+                        isActive
+                          ? 'text-orange-600'
+                          : 'text-black/70 group-hover:text-black'
                       }`}
                     />
                     <span
                       className={`${
-                        isActive ? 'text-orange-600' : 'text-black/70 group-hover:text-black'
+                        isActive
+                          ? 'text-orange-600'
+                          : 'text-black/70 group-hover:text-black'
                       }`}
                     >
                       {text}
@@ -91,16 +100,29 @@ const Sidebar = () => {
 
           {/* Projects Section */}
           <div className="mt-6 px-4">
-            <h2 className="text-sm font-semibold text-gray-600 mb-2">PROJECTS</h2>
+            <h2 className="text-sm font-semibold text-gray-600 mb-2">
+              LISTS
+            </h2>
             <ul className="space-y-1">
               {projects.map((proj, idx) => (
                 <li key={idx}>
-                  <button className="w-full flex items-center px-3 py-2 rounded-sm text-left hover:bg-gray-100">
-                    <div className="w-6 h-6 flex items-center justify-center bg-purple-500 text-white text-xs rounded mr-3">
-                      {proj.slice(0, 2).toUpperCase()}
-                    </div>
-                    <span>{proj}</span>
-                  </button>
+                  <div className="flex items-center justify-between group">
+                    <button
+                      onClick={() => router.push(`/lists/${proj}`)}
+                      className="flex-1 flex items-center px-3 py-2 rounded-sm text-left hover:bg-gray-100"
+                    >
+                      <div className="w-6 h-6 flex items-center justify-center bg-purple-500 text-white text-xs rounded mr-3">
+                        {proj.slice(0, 2).toUpperCase()}
+                      </div>
+                      <span>{proj}</span>
+                    </button>
+                    <button
+                      onClick={() => handleDeleteProject(proj)}
+                      className="p-1 text-gray-400 hover:text-red-600"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
                 </li>
               ))}
             </ul>
@@ -110,7 +132,7 @@ const Sidebar = () => {
               className="mt-2 w-full flex items-center px-3 py-2 text-sm text-orange-600 font-medium hover:bg-orange-50 rounded-sm"
             >
               <Plus size={16} className="mr-2" />
-              Create Project
+              Create List
             </button>
           </div>
         </nav>
@@ -131,11 +153,11 @@ const Sidebar = () => {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Create New Project</DialogTitle>
+            <DialogTitle>Create New List</DialogTitle>
           </DialogHeader>
           <div className="space-y-3">
             <Input
-              placeholder="Project Name"
+              placeholder="List Name"
               value={projectName}
               onChange={(e) => setProjectName(e.target.value)}
             />
@@ -149,7 +171,10 @@ const Sidebar = () => {
             <Button variant="outline" onClick={() => setOpen(false)}>
               Cancel
             </Button>
-            <Button className="bg-orange-600 text-white" onClick={handleCreateProject}>
+            <Button
+              className="bg-orange-600 text-white"
+              onClick={handleCreateProject}
+            >
               Create
             </Button>
           </DialogFooter>
