@@ -1,8 +1,7 @@
-// src/app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Sidebar from "@/commen/Sidebar";
+import Sidebar from "@/commen/Sidebar"; // ✅ This matches the file now
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,11 +25,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Sidebar />
-        <main className="ml-[280px] p-6 bg-gray-50 min-h-screen">
-          {children}
-        </main>
+        <main className="ml-64 p-6 bg-gray-50 min-h-screen">{children}</main>
       </body>
     </html>
   );
