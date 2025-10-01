@@ -35,21 +35,27 @@ export default function ListCards() {
   console.log('Fetching lists...', lists);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-      {lists.map((list) => (
-        <div
-          key={list.id}
-          className="bg-white shadow-md rounded-2xl p-5 border border-gray-200 hover:shadow-lg transition"
-        >
-          <h2 className="text-xl font-semibold text-gray-800">{list.ID}</h2>
-          <p className="text-gray-600 mt-2">
-            <span className="font-medium">User ID:</span> {list.Title}
-          </p>
-          <p className="text-gray-600">
-            <span className="font-medium">Email:</span> {list.UserEmail}
-          </p>
-        </div>
-      ))}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-6">
+  {lists.map((list) => (
+    <div
+      key={list.ID}
+      className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition transform hover:-translate-y-2"
+    >
+      {/* Header gradient strip */}
+      <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-2"></div>
+
+      <div className="p-6">
+        {/* Title */}
+        <h2 className="text-2xl font-bold text-gray-800 mb-3">{list.Title}</h2>
+
+        {/* Action button */}
+        <button className="w-full py-2 px-4 bg-indigo-500 text-white font-medium rounded-xl hover:bg-indigo-600 transition">
+          View Details
+        </button>
+      </div>
     </div>
+  ))}
+</div>
+
   );
 }
