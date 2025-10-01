@@ -1,36 +1,52 @@
-// app/dashboard/page.tsx
-'use client';
+import { AppSidebar } from "@/components/app-sidebar"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import { Separator } from "@/components/ui/separator"
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
 
-import { useState } from 'react';
-import AddTaskModal from '@/components/AddTaskModal';
-
-export default function DashboardPage() {
-  const [showModal, setShowModal] = useState(false);
-
-  const handleSaveTask = (task: { description: string; date: string }) => {
-    console.log('New Task:', task);
-    // Here you can POST to your backend API
-  };
-
+export default function Page() {
   return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <button
-          onClick={() => setShowModal(true)}
-          className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600"
-        >
-          Add Task
-        </button>
-      </div>
-
-      <AddTaskModal
-        isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        onSave={handleSaveTask}
-      />
-
-      {/* Add content like task lists here */}
-    </div>
-  );
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+          <div className="flex items-center gap-2 px-4">
+            <SidebarTrigger className="-ml-1" />
+            <Separator orientation="vertical" className="mr-2 h-4" />
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem className="hidden md:block">
+                  <BreadcrumbLink href="#">
+                    Building Your Application
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator className="hidden md:block" />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+        </header>
+        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+            <div className="aspect-video rounded-xl bg-muted/50" />
+            <div className="aspect-video rounded-xl bg-muted/50" />
+            <div className="aspect-video rounded-xl bg-muted/50" />
+          </div>
+          <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
+  )
 }
