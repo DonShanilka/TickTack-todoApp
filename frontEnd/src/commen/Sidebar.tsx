@@ -1,16 +1,19 @@
-import { useState } from 'react';
-import { LayoutDashboard, Calendar, CheckSquare, List, Folder, Settings, ChevronRight } from 'lucide-react';
+"use client";
+
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { LayoutDashboard, Calendar, CheckSquare, List, Folder, Settings, ChevronRight } from "lucide-react";
 
 export default function DashboardSidebar() {
-  const [activeItem, setActiveItem] = useState('dashboard');
+  const pathname = usePathname(); // get current route path
 
   const menuItems = [
-    { id: 'dashboard', name: 'Dashboard', icon: LayoutDashboard },
-    { id: 'calendar', name: 'Calendar', icon: Calendar },
-    { id: 'tasks', name: 'My All Task', icon: CheckSquare },
-    { id: 'list', name: 'My List', icon: List },
-    { id: 'project', name: 'Project', icon: Folder },
-    { id: 'settings', name: 'Settings', icon: Settings },
+    { id: "dashboard", name: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
+    { id: "calendar", name: "Calendar", icon: Calendar, path: "/calendar" },
+    { id: "tasks", name: "My All Task", icon: CheckSquare, path: "/tasks" },
+    { id: "list", name: "My List", icon: List, path: "/list" },
+    { id: "project", name: "Project", icon: Folder, path: "/project" },
+    { id: "settings", name: "Settings", icon: Settings, path: "/settings" },
   ];
 
   return (
@@ -28,16 +31,16 @@ export default function DashboardSidebar() {
           <ul className="space-y-2">
             {menuItems.map((item) => {
               const Icon = item.icon;
-              const isActive = activeItem === item.id;
-              
+              const isActive = pathname === item.path;
+
               return (
                 <li key={item.id}>
-                  <button
-                    onClick={() => setActiveItem(item.id)}
+                  <Link
+                    href={item.path}
                     className={`w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all duration-200 ${
                       isActive
-                        ? 'bg-gray-100 text-gray-900'
-                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                        ? "bg-gray-100 text-gray-900"
+                        : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                     }`}
                   >
                     <div className="flex items-center gap-3">
@@ -45,7 +48,7 @@ export default function DashboardSidebar() {
                       <span className="font-medium">{item.name}</span>
                     </div>
                     {isActive && <ChevronRight className="w-4 h-4" />}
-                  </button>
+                  </Link>
                 </li>
               );
             })}
@@ -69,23 +72,13 @@ export default function DashboardSidebar() {
       {/* Main Content Area */}
       <div className="flex-1 p-8 bg-gray-50">
         <div className="max-w-6xl mx-auto">
+          {/* Use pathname to show title dynamically */}
           <h2 className="text-3xl font-bold text-gray-900 mb-2">
-            {menuItems.find(item => item.id === activeItem)?.name}
+            {menuItems.find((item) => item.path === pathname)?.name}
           </h2>
           <p className="text-gray-600">
-            Welcome to your {activeItem} section
+            Welcome to your {menuItems.find((item) => item.path === pathname)?.id} section
           </p>
-          
-          {/* Placeholder content */}
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-                <div className="w-12 h-12 bg-gray-100 rounded-lg mb-4"></div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Card {i}</h3>
-                <p className="text-gray-600 text-sm">Content goes here for your {activeItem}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </div>
