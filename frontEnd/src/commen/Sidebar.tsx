@@ -16,10 +16,15 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   const menuItems = [
-    { id: "dashboard", name: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
+    {
+      id: "dashboard",
+      name: "Dashboard",
+      icon: LayoutDashboard,
+      path: "/dashboard",
+    },
     { id: "calendar", name: "Calendar", icon: Calendar, path: "/calendar" },
     { id: "tasks", name: "My All Task", icon: CheckSquare, path: "/tasks" },
-    { id: "list", name: "My List", icon: List, path: "/list" },
+    { id: "list", name: "My List", icon: List, path: "/lists" },
     { id: "project", name: "Project", icon: Folder, path: "/project" },
     { id: "settings", name: "Settings", icon: Settings, path: "/settings" },
   ];
@@ -34,7 +39,7 @@ export default function Sidebar() {
 
       {/* Navigation */}
       <nav className="flex-1 p-4 overflow-y-auto">
-        <ul className="space-y-2">
+        <ul className="space-y-3">
           {menuItems.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.path;
@@ -42,14 +47,14 @@ export default function Sidebar() {
               <li key={item.id}>
                 <Link
                   href={item.path}
-                  className={`w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all duration-200 ${
+                  className={`w-full flex items-center justify-between px-3 py-2 rounded-md transition-all duration-200 text-sm ${
                     isActive
                       ? "bg-gray-100 text-gray-900"
                       : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                   }`}
                 >
-                  <div className="flex items-center gap-3">
-                    <Icon className="w-5 h-5" />
+                  <div className="flex items-center gap-2">
+                    <Icon className="w-4 h-4" />
                     <span className="font-medium">{item.name}</span>
                   </div>
                   {isActive && <ChevronRight className="w-4 h-4" />}
