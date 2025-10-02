@@ -23,7 +23,7 @@ export default function Sidebar() {
       path: "/dashboard",
     },
     { id: "calendar", name: "Calendar", icon: Calendar, path: "/calendar" },
-    { id: "tasks", name: "My All Task", icon: CheckSquare, path: "/tasks" },
+    { id: "tasks", name: "My All Task", icon: CheckSquare, path: "/task" },
     { id: "list", name: "My List", icon: List, path: "/lists" },
     { id: "project", name: "Project", icon: Folder, path: "/project" },
     { id: "settings", name: "Settings", icon: Settings, path: "/settings" },
